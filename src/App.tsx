@@ -241,8 +241,11 @@ function SettingsModal({
   setSoundEnabled,
   theme,
   setTheme,
+  setTheme,
   maxTrials,
-  setMaxTrials
+  setMaxTrials,
+  seed,
+  setSeed
 }: {
   onClose: () => void
   soundEnabled: boolean
@@ -251,6 +254,8 @@ function SettingsModal({
   setTheme: (t: Theme) => void
   maxTrials: number
   setMaxTrials: (n: number) => void
+  seed: number
+  setSeed: (n: number) => void
 }) {
   return (
     <div className="modal-backdrop" role="dialog" aria-modal="true">
@@ -278,6 +283,16 @@ function SettingsModal({
             value={maxTrials}
             onChange={(e) => setMaxTrials(parseInt(e.target.value) || 128)}
             style={{ width: '80px', padding: '8px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(0,0,0,0.2)', color: 'white' }}
+          />
+        </div>
+
+        <div className="modal-option">
+          <label>Seed</label>
+          <input
+            type="number"
+            value={seed}
+            onChange={(e) => setSeed(parseInt(e.target.value) || 0)}
+            style={{ width: '120px', padding: '8px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(0,0,0,0.2)', color: 'white' }}
           />
         </div>
 
@@ -347,7 +362,7 @@ function playBeep(f = 600, duration = 0.18) {
 export default function App() {
   const [participant, setParticipant] = useState('')
   const [sessionId, setSessionId] = useState(() => Math.random().toString(36).slice(2))
-  const [seed, setSeed] = useState(() => Math.floor(Math.random() * 1e9))
+  const [seed, setSeed] = useState(42)
   const [maxTrials, setMaxTrials] = useState<number>(128)
   const [running, setRunning] = useState(false)
   const [feedback, setFeedback] = useState<null | { text: string; ok: boolean }>(null)
@@ -598,6 +613,8 @@ export default function App() {
           setTheme={setTheme}
           maxTrials={maxTrials}
           setMaxTrials={setMaxTrials}
+          seed={seed}
+          setSeed={setSeed}
         />
       )}
 
@@ -614,14 +631,7 @@ export default function App() {
                 placeholder="Ex: P001"
               />
             </div>
-            <div className="form-group">
-              <label>Seed (optionnel):</label>
-              <input
-                type="number"
-                value={seed}
-                onChange={e => setSeed(parseInt(e.target.value) || 0)}
-              />
-            </div>
+
 
             <button className="primary big-btn" onClick={startWithCountdown} style={{
               marginTop: '20px',
