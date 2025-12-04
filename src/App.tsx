@@ -406,8 +406,11 @@ export default function App() {
   }, [])
 
   function toggleFullScreen() {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(err => {
+    const docEl = document.documentElement as any
+    const requestFullScreen = docEl.requestFullscreen || docEl.webkitRequestFullscreen || docEl.mozRequestFullScreen || docEl.msRequestFullscreen
+
+    if (requestFullScreen && !document.fullscreenElement && !(document as any).webkitFullscreenElement) {
+      requestFullScreen.call(docEl).catch((err: any) => {
         console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`)
       })
     }
