@@ -1,74 +1,72 @@
 import React, { useState, useMemo } from 'react'
 import './styles.css'
 
-const SUS_QUESTIONS = [
-    "Je pense que j'aimerais utiliser ce jeu fréquemment.",
-    "J'ai trouvé ce jeu inutilement complexe.",
-    "J'ai trouvé ce jeu facile à utiliser.",
-    "Je pense que j'aurais besoin de l'aide d'une personne technique pour pouvoir utiliser ce jeu.",
-    "J'ai trouvé que les différentes fonctions de ce jeu étaient bien intégrées.",
-    "J'ai trouvé qu'il y avait trop d'incohérences dans ce jeu.",
-    "J'imagine que la plupart des gens apprendraient à utiliser ce jeu très rapidement.",
-    "J'ai trouvé ce jeu très lourd à utiliser.",
-    "Je me suis senti(e) très confiant(e) en utilisant ce jeu.",
-    "J'ai eu besoin d'apprendre beaucoup de choses avant de pouvoir utiliser ce jeu."
-]
-
-const SCALE_OPTIONS = [
-    { value: 1, emoji: '😞', label: 'Pas du tout d\'accord' },
-    { value: 2, emoji: '🙁', label: '' },
-    { value: 3, emoji: '😐', label: '' },
-    { value: 4, emoji: '🙂', label: '' },
-    { value: 5, emoji: '😊', label: 'Tout à fait d\'accord' },
+const FSUS_QUESTIONS = [
+    "Je voudrais utiliser ce système fréquemment",
+    "Ce système est inutilement complexe",
+    "Ce système est facile à utiliser",
+    "J'aurais besoin du soutien d'un technicien pour être capable d'utiliser ce système",
+    "Les différentes fonctionnalités de ce système sont bien intégrées",
+    "Il y a trop d'incohérences dans ce système",
+    "La plupart des gens apprendront à utiliser ce système très rapidement",
+    "Ce système est très lourd à utiliser",
+    "Je me suis senti·e très en confiance en utilisant ce système",
+    "J'ai eu besoin d'apprendre beaucoup de choses avant de pouvoir utiliser ce système"
 ]
 
 interface SUSProps {
-    onComplete: (score: number, answers: number[]) => void
+    onComplete: (score: number, answers: number[], nps: number) => void
     onBack: () => void
     participantId: string
 }
 
 export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
     const [answers, setAnswers] = useState<(number | null)[]>(Array(10).fill(null))
+    const [npsAnswer, setNpsAnswer] = useState<number | null>(null)
     const [currentQuestion, setCurrentQuestion] = useState(0)
     const [started, setStarted] = useState(false)
+    const [showNPS, setShowNPS] = useState(false)
 
     const handleSelect = (questionIndex: number, value: number) => {
         const newAnswers = [...answers]
         newAnswers[questionIndex] = value
         setAnswers(newAnswers)
 
-        // Auto-advance to next question after a short delay
-        if (questionIndex < 9) {
-            setTimeout(() => setCurrentQuestion(questionIndex + 1), 300)
-        }
+        // Auto-advance after short delay
+        setTimeout(() => {
+            if (questionIndex < 9) {
+                setCurrentQuestion(questionIndex + 1)
+            } else {
+                setShowNPS(true)
+            }
+        }, 300)
     }
 
     const calculateSUSScore = () => {
-        // SUS scoring: 
-        // For odd questions (1,3,5,7,9): score = response - 1
-        // For even questions (2,4,6,8,10): score = 5 - response
-        // Total = sum * 2.5
+        // F-SUS scoring adapted for 0-10 scale
+        // Normalize to 0-4 range first, then apply SUS formula
         let total = 0
         answers.forEach((answer, index) => {
             if (answer === null) return
+            const normalized = answer / 2.5 // Convert 0-10 to 0-4
             if (index % 2 === 0) {
-                // Odd questions (0-indexed even)
-                total += (answer - 1)
+                // Odd questions (positive): score = normalized
+                total += normalized
             } else {
-                // Even questions (0-indexed odd)
-                total += (5 - answer)
+                // Even questions (negative): score = 4 - normalized
+                total += (4 - normalized)
             }
         })
         return total * 2.5
     }
 
     const allAnswered = answers.every(a => a !== null)
+    const isComplete = allAnswered && npsAnswer !== null
     const susScore = useMemo(() => allAnswered ? calculateSUSScore() : null, [answers, allAnswered])
 
     const handleSubmit = () => {
-        if (allAnswered && susScore !== null) {
-            onComplete(susScore, answers as number[])
+        if (isComplete && susScore !== null && npsAnswer !== null) {
+            onComplete(susScore, answers as number[], npsAnswer)
         }
     }
 
@@ -76,7 +74,8 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
         const headers = [
             'participant_id',
             'timestamp_utc',
-            ...SUS_QUESTIONS.map((_, i) => `q${i + 1}`),
+            ...FSUS_QUESTIONS.map((_, i) => `q${i + 1}`),
+            'nps_score',
             'sus_score'
         ]
 
@@ -84,7 +83,8 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
             participantId || 'anon',
             new Date().toISOString(),
             ...answers,
-            susScore
+            npsAnswer,
+            susScore?.toFixed(1)
         ]
 
         const csv = '\uFEFF' + headers.join(';') + '\n' + row.join(';')
@@ -92,7 +92,7 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
         const url = URL.createObjectURL(blob)
         const a = document.createElement('a')
         a.href = url
-        a.download = `prisme-sus-${Date.now()}.csv`
+        a.download = `prisme-fsus-${Date.now()}.csv`
         a.click()
         URL.revokeObjectURL(url)
     }
@@ -106,7 +106,7 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                         ← Retour
                     </button>
                     <div style={{ fontSize: 12, color: '#94a3b8' }}>
-                        Questionnaire SUS
+                        Questionnaire F-SUS
                     </div>
                 </header>
 
@@ -138,7 +138,7 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                             Nous allons vous poser <strong>10 questions</strong> pour savoir comment vous avez apprécié le jeu.
                         </p>
                         <p style={{ fontSize: '1rem', lineHeight: 1.6, color: '#94a3b8' }}>
-                            Pour chaque question, indiquez votre niveau d'accord en cliquant sur l'emoji correspondant.
+                            Pour chaque question, indiquez votre niveau d'accord sur une échelle de 0 à 10.
                         </p>
                     </div>
 
@@ -157,6 +157,134 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                     >
                         COMMENCER
                     </button>
+                </div>
+            </div>
+        )
+    }
+
+    // NPS Question
+    if (showNPS) {
+        return (
+            <div className="container">
+                <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <button className="secondary" onClick={() => setShowNPS(false)} style={{ padding: '8px 16px' }}>
+                        ← Retour
+                    </button>
+                    <div style={{ fontSize: 12, color: '#94a3b8' }}>
+                        Question finale
+                    </div>
+                </header>
+
+                <div className="intro-screen" style={{ marginTop: 20 }}>
+                    <h2 style={{
+                        marginBottom: '10px',
+                        textAlign: 'center',
+                        background: 'linear-gradient(to right, #f97316, #ec4899, #a855f7, #3b82f6)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        fontSize: '2rem',
+                        letterSpacing: '4px',
+                        fontWeight: '900'
+                    }}>
+                        PRISME
+                    </h2>
+
+                    {/* Fixed size question box */}
+                    <div style={{
+                        background: 'rgba(255,255,255,0.05)',
+                        padding: 32,
+                        borderRadius: 16,
+                        marginTop: 30,
+                        width: '100%',
+                        maxWidth: 600,
+                        margin: '30px auto'
+                    }}>
+                        <p style={{
+                            fontSize: '1.1rem',
+                            lineHeight: 1.6,
+                            textAlign: 'center',
+                            marginBottom: 32,
+                            minHeight: 50
+                        }}>
+                            <strong>Recommanderiez-vous ce système à d'autres personnes ?</strong>
+                        </p>
+
+                        {/* 0-10 Scale */}
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            gap: 6,
+                            flexWrap: 'nowrap',
+                            marginBottom: 12
+                        }}>
+                            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((val) => (
+                                <button
+                                    key={val}
+                                    onClick={() => setNpsAnswer(val)}
+                                    style={{
+                                        width: 44,
+                                        height: 44,
+                                        borderRadius: 8,
+                                        border: npsAnswer === val
+                                            ? '2px solid #ec4899'
+                                            : '1px solid rgba(255,255,255,0.2)',
+                                        background: npsAnswer === val
+                                            ? 'rgba(236, 72, 153, 0.3)'
+                                            : 'rgba(255,255,255,0.05)',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.2s',
+                                        fontSize: 16,
+                                        fontWeight: 600,
+                                        color: '#e2e8f0',
+                                        flexShrink: 0
+                                    }}
+                                >
+                                    {val}
+                                </button>
+                            ))}
+                        </div>
+
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            fontSize: 12,
+                            color: '#94a3b8'
+                        }}>
+                            <span>Certainement pas</span>
+                            <span>Absolument</span>
+                        </div>
+                    </div>
+
+                    <button
+                        className="primary"
+                        onClick={handleSubmit}
+                        disabled={npsAnswer === null}
+                        style={{ padding: '12px 32px', marginTop: 20 }}
+                    >
+                        Terminer ✓
+                    </button>
+
+                    {/* Score display when complete */}
+                    {isComplete && susScore !== null && (
+                        <div style={{
+                            marginTop: 30,
+                            padding: 24,
+                            background: 'rgba(255,255,255,0.05)',
+                            borderRadius: 16,
+                            textAlign: 'center'
+                        }}>
+                            <h3 style={{ marginBottom: 16, color: '#22c55e' }}>✓ Questionnaire complété !</h3>
+                            <p style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: 8 }}>
+                                Score SUS: <span style={{ color: '#ec4899' }}>{susScore.toFixed(1)}</span> / 100
+                            </p>
+                            <p style={{ fontSize: '1rem', marginBottom: 16, color: '#94a3b8' }}>
+                                Score NPS: <span style={{ color: '#3b82f6' }}>{npsAnswer}</span> / 10
+                            </p>
+                            <button className="primary" onClick={downloadCSV} style={{ padding: '12px 24px' }}>
+                                📥 Télécharger CSV
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         )
@@ -186,9 +314,6 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                 }}>
                     PRISME
                 </h2>
-                <h3 style={{ marginBottom: '30px', textAlign: 'center', color: '#94a3b8', fontSize: '1rem' }}>
-                    Questionnaire d'utilisabilité
-                </h3>
 
                 {/* Progress bar */}
                 <div style={{
@@ -208,84 +333,88 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                     }} />
                 </div>
 
-                {/* Current Question - FIXED HEIGHT */}
+                {/* FIXED SIZE Question Box */}
                 <div style={{
                     background: 'rgba(255,255,255,0.05)',
-                    padding: 24,
+                    padding: 32,
                     borderRadius: 16,
                     marginBottom: 20,
-                    minHeight: 280,
+                    width: '100%',
+                    maxWidth: 600,
+                    minHeight: 300,
+                    margin: '0 auto 20px',
                     display: 'flex',
                     flexDirection: 'column'
                 }}>
+                    {/* Fixed height question area */}
                     <div style={{
-                        minHeight: 80,
+                        height: 100,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         marginBottom: 24
                     }}>
-                        <p style={{ fontSize: '1.1rem', lineHeight: 1.6, textAlign: 'center' }}>
-                            <strong>{currentQuestion + 1}.</strong> {SUS_QUESTIONS[currentQuestion]}
+                        <p style={{
+                            fontSize: '1.1rem',
+                            lineHeight: 1.6,
+                            textAlign: 'center',
+                            maxWidth: 500
+                        }}>
+                            <strong>{currentQuestion + 1}.</strong> {FSUS_QUESTIONS[currentQuestion]}
                         </p>
                     </div>
 
+                    {/* 0-10 Scale - Fixed size buttons */}
                     <div style={{
                         display: 'flex',
                         justifyContent: 'center',
-                        gap: 12,
-                        flexWrap: 'nowrap'
+                        gap: 6,
+                        flexWrap: 'nowrap',
+                        marginBottom: 12
                     }}>
-                        {SCALE_OPTIONS.map((option) => (
+                        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((val) => (
                             <button
-                                key={option.value}
-                                onClick={() => handleSelect(currentQuestion, option.value)}
+                                key={val}
+                                onClick={() => handleSelect(currentQuestion, val)}
                                 style={{
-                                    width: 70,
-                                    height: 100,
-                                    padding: '12px 8px',
-                                    borderRadius: 12,
-                                    border: answers[currentQuestion] === option.value
+                                    width: 44,
+                                    height: 44,
+                                    borderRadius: 8,
+                                    border: answers[currentQuestion] === val
                                         ? '2px solid #ec4899'
-                                        : '1px solid rgba(255,255,255,0.1)',
-                                    background: answers[currentQuestion] === option.value
-                                        ? 'rgba(236, 72, 153, 0.2)'
+                                        : '1px solid rgba(255,255,255,0.2)',
+                                    background: answers[currentQuestion] === val
+                                        ? 'rgba(236, 72, 153, 0.3)'
                                         : 'rgba(255,255,255,0.05)',
                                     cursor: 'pointer',
                                     transition: 'all 0.2s',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    gap: 8,
+                                    fontSize: 16,
+                                    fontWeight: 600,
+                                    color: '#e2e8f0',
                                     flexShrink: 0
                                 }}
                             >
-                                <span style={{ fontSize: 28 }}>{option.emoji}</span>
-                                <span style={{ fontSize: 18, fontWeight: 600 }}>{option.value}</span>
+                                {val}
                             </button>
                         ))}
                     </div>
 
-                    {/* Labels under first and last */}
+                    {/* Labels */}
                     <div style={{
                         display: 'flex',
                         justifyContent: 'space-between',
-                        marginTop: 8,
-                        paddingLeft: 10,
-                        paddingRight: 10
+                        fontSize: 12,
+                        color: '#94a3b8',
+                        paddingLeft: 8,
+                        paddingRight: 8
                     }}>
-                        <span style={{ fontSize: 11, color: '#94a3b8', maxWidth: 80, textAlign: 'center' }}>
-                            Pas du tout d'accord
-                        </span>
-                        <span style={{ fontSize: 11, color: '#94a3b8', maxWidth: 80, textAlign: 'center' }}>
-                            Tout à fait d'accord
-                        </span>
+                        <span>Pas du tout d'accord</span>
+                        <span>Tout à fait d'accord</span>
                     </div>
                 </div>
 
                 {/* Navigation */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: 16, maxWidth: 400, margin: '0 auto' }}>
                     <button
                         className="secondary"
                         onClick={() => setCurrentQuestion(Math.max(0, currentQuestion - 1))}
@@ -295,25 +424,20 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                         ← Précédent
                     </button>
 
-                    {currentQuestion < 9 ? (
-                        <button
-                            className="primary"
-                            onClick={() => setCurrentQuestion(currentQuestion + 1)}
-                            disabled={answers[currentQuestion] === null}
-                            style={{ flex: 1, padding: 12 }}
-                        >
-                            Suivant →
-                        </button>
-                    ) : (
-                        <button
-                            className="primary"
-                            onClick={handleSubmit}
-                            disabled={!allAnswered}
-                            style={{ flex: 1, padding: 12 }}
-                        >
-                            Terminer ✓
-                        </button>
-                    )}
+                    <button
+                        className="primary"
+                        onClick={() => {
+                            if (currentQuestion < 9) {
+                                setCurrentQuestion(currentQuestion + 1)
+                            } else {
+                                setShowNPS(true)
+                            }
+                        }}
+                        disabled={answers[currentQuestion] === null}
+                        style={{ flex: 1, padding: 12 }}
+                    >
+                        {currentQuestion < 9 ? 'Suivant →' : 'Suivant →'}
+                    </button>
                 </div>
 
                 {/* Quick navigation dots */}
@@ -343,25 +467,6 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                         />
                     ))}
                 </div>
-
-                {/* Score display when complete */}
-                {allAnswered && susScore !== null && (
-                    <div style={{
-                        marginTop: 30,
-                        padding: 24,
-                        background: 'rgba(255,255,255,0.05)',
-                        borderRadius: 16,
-                        textAlign: 'center'
-                    }}>
-                        <h3 style={{ marginBottom: 16, color: '#22c55e' }}>✓ Questionnaire complété !</h3>
-                        <p style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: 16 }}>
-                            Score SUS: <span style={{ color: '#ec4899' }}>{susScore.toFixed(1)}</span> / 100
-                        </p>
-                        <button className="primary" onClick={downloadCSV} style={{ padding: '12px 24px' }}>
-                            📥 Télécharger CSV
-                        </button>
-                    </div>
-                )}
             </div>
         </div>
     )
