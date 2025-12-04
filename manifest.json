@@ -1,14 +1,14 @@
 {
-    "name": "WCST Game",
-    "short_name": "WCST",
+    "name": "PRISME Toolkit",
+    "short_name": "PRISME",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0f172a",
-    "theme_color": "#0f172a",
-    "orientation": "landscape",
+    "background_color": "#1e1b4b",
+    "theme_color": "#1e1b4b",
+    "orientation": "any",
     "icons": [
         {
-            "src": "vite.svg",
+            "src": "favicon.svg",
             "sizes": "any",
             "type": "image/svg+xml"
         }
