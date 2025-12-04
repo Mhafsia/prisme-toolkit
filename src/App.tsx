@@ -241,7 +241,6 @@ function SettingsModal({
   setSoundEnabled,
   theme,
   setTheme,
-  setTheme,
   maxTrials,
   setMaxTrials,
   seed,
