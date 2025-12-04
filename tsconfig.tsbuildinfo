@@ -1,1 +1,1 @@
-{"root":["./src/app.tsx","./src/sus.tsx","./src/settings.tsx","./src/toolselector.tsx","./src/wcstapp.tsx","./src/logger.ts","./src/main.tsx","./src/types.ts","./src/engine/rng.ts","./src/engine/wcst.ts"],"version":"5.9.3"}
+{"root":["./src/app.tsx","./src/sus.tsx","./src/settings.tsx","./src/splashscreen.tsx","./src/toolselector.tsx","./src/wcstapp.tsx","./src/logger.ts","./src/main.tsx","./src/types.ts","./src/engine/rng.ts","./src/engine/wcst.ts"],"version":"5.9.3"}

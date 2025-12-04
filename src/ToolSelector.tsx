@@ -22,8 +22,8 @@ export default function ToolSelector({ onSelectWCST, onSelectSUS, participantId,
                     background: 'linear-gradient(to right, #f97316, #ec4899, #a855f7, #3b82f6)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
-                    fontSize: '1.2rem',
-                    letterSpacing: '3px',
+                    fontSize: '1.5rem',
+                    letterSpacing: '4px',
                     fontWeight: '800'
                 }}>PRISME</span>
                 <button className="secondary" onClick={() => setShowSettings(true)} style={{ padding: '8px 12px', fontSize: 16 }}>
@@ -35,17 +35,6 @@ export default function ToolSelector({ onSelectWCST, onSelectSUS, participantId,
 
             <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div style={{ textAlign: 'center', width: '100%', maxWidth: 600 }}>
-                    <h1 style={{
-                        marginBottom: '10px',
-                        background: 'linear-gradient(to right, #f97316, #ec4899, #a855f7, #3b82f6)',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
-                        fontSize: '4rem',
-                        letterSpacing: '8px',
-                        fontWeight: '900'
-                    }}>
-                        {t.toolkitTitle}
-                    </h1>
                     <h2 style={{ marginBottom: '30px', color: '#94a3b8', fontSize: '1.3rem', fontWeight: '400' }}>
                         {t.toolkitSubtitle}
                     </h2>

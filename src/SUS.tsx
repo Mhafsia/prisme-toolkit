@@ -154,7 +154,7 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                         background: 'linear-gradient(to right, #f97316, #ec4899, #a855f7, #3b82f6)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
-                        fontSize: '1.2rem',
+                        fontSize: '1.5rem',
                         letterSpacing: '3px',
                         fontWeight: '800'
                     }}>PRISME</span>
@@ -185,7 +185,7 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                         background: 'linear-gradient(to right, #f97316, #ec4899, #a855f7, #3b82f6)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
-                        fontSize: '1.2rem',
+                        fontSize: '1.5rem',
                         letterSpacing: '3px',
                         fontWeight: '800'
                     }}>PRISME</span>
@@ -260,7 +260,7 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                         background: 'linear-gradient(to right, #f97316, #ec4899, #a855f7, #3b82f6)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
-                        fontSize: '1.2rem',
+                        fontSize: '1.5rem',
                         letterSpacing: '3px',
                         fontWeight: '800'
                     }}>PRISME</span>
@@ -364,7 +364,7 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                     background: 'linear-gradient(to right, #f97316, #ec4899, #a855f7, #3b82f6)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
-                    fontSize: '1.2rem',
+                    fontSize: '1.5rem',
                     letterSpacing: '3px',
                     fontWeight: '800'
                 }}>PRISME</span>

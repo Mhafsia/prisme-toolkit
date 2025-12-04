@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { SettingsProvider, SettingsModal, useSettings, T } from './Settings'
+import { SettingsProvider } from './Settings'
+import SplashScreen from './SplashScreen'
 import ToolSelector from './ToolSelector'
 import WCSTApp from './WCSTApp'
 import SUS from './SUS'
@@ -8,11 +9,16 @@ import './styles.css'
 type ActiveTool = 'selector' | 'wcst' | 'sus'
 
 function AppContent() {
+    const [showSplash, setShowSplash] = useState(true)
     const [activeTool, setActiveTool] = useState<ActiveTool>('selector')
     const [participantId, setParticipantId] = useState('')
 
     const handleBack = () => {
         setActiveTool('selector')
+    }
+
+    if (showSplash) {
+        return <SplashScreen onComplete={() => setShowSplash(false)} />
     }
 
     if (activeTool === 'wcst') {
