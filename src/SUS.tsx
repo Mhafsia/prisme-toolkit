@@ -2,24 +2,24 @@ import React, { useState, useMemo } from 'react'
 import './styles.css'
 
 const SUS_QUESTIONS = [
-    "I think that I would like to use this game frequently.",
-    "I found the game unnecessarily complex.",
-    "I thought the game was easy to use.",
-    "I think that I would need the support of a technical person to be able to use this game.",
-    "I found the various functions in this game were well integrated.",
-    "I thought there was too much inconsistency in this game.",
-    "I would imagine that most people would learn to use this game very quickly.",
-    "I found the game very cumbersome to use.",
-    "I felt very confident using the game.",
-    "I needed to learn a lot of things before I could get going with this game."
+    "Je pense que j'aimerais utiliser ce jeu fréquemment.",
+    "J'ai trouvé ce jeu inutilement complexe.",
+    "J'ai trouvé ce jeu facile à utiliser.",
+    "Je pense que j'aurais besoin de l'aide d'une personne technique pour pouvoir utiliser ce jeu.",
+    "J'ai trouvé que les différentes fonctions de ce jeu étaient bien intégrées.",
+    "J'ai trouvé qu'il y avait trop d'incohérences dans ce jeu.",
+    "J'imagine que la plupart des gens apprendraient à utiliser ce jeu très rapidement.",
+    "J'ai trouvé ce jeu très lourd à utiliser.",
+    "Je me suis senti(e) très confiant(e) en utilisant ce jeu.",
+    "J'ai eu besoin d'apprendre beaucoup de choses avant de pouvoir utiliser ce jeu."
 ]
 
 const SCALE_OPTIONS = [
-    { value: 1, emoji: '😞', label: 'Strongly Disagree' },
+    { value: 1, emoji: '😞', label: 'Pas du tout d\'accord' },
     { value: 2, emoji: '🙁', label: '' },
     { value: 3, emoji: '😐', label: '' },
     { value: 4, emoji: '🙂', label: '' },
-    { value: 5, emoji: '😊', label: 'Strongly Agree' },
+    { value: 5, emoji: '😊', label: 'Tout à fait d\'accord' },
 ]
 
 interface SUSProps {
@@ -31,6 +31,7 @@ interface SUSProps {
 export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
     const [answers, setAnswers] = useState<(number | null)[]>(Array(10).fill(null))
     const [currentQuestion, setCurrentQuestion] = useState(0)
+    const [started, setStarted] = useState(false)
 
     const handleSelect = (questionIndex: number, value: number) => {
         const newAnswers = [...answers]
@@ -96,6 +97,71 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
         URL.revokeObjectURL(url)
     }
 
+    // Intro screen
+    if (!started) {
+        return (
+            <div className="container">
+                <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <button className="secondary" onClick={onBack} style={{ padding: '8px 16px' }}>
+                        ← Retour
+                    </button>
+                    <div style={{ fontSize: 12, color: '#94a3b8' }}>
+                        Questionnaire SUS
+                    </div>
+                </header>
+
+                <div className="intro-screen" style={{ marginTop: 40, textAlign: 'center' }}>
+                    <h2 style={{
+                        marginBottom: '10px',
+                        background: 'linear-gradient(to right, #f97316, #ec4899, #a855f7, #3b82f6)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        fontSize: '2.5rem',
+                        letterSpacing: '4px',
+                        fontWeight: '900'
+                    }}>
+                        PRISME
+                    </h2>
+                    <h3 style={{ marginBottom: '30px', color: '#94a3b8', fontSize: '1.2rem' }}>
+                        Questionnaire d'utilisabilité
+                    </h3>
+
+                    <div style={{
+                        background: 'rgba(255,255,255,0.05)',
+                        padding: 32,
+                        borderRadius: 16,
+                        marginBottom: 30,
+                        maxWidth: 500,
+                        margin: '0 auto 30px'
+                    }}>
+                        <p style={{ fontSize: '1.1rem', lineHeight: 1.8, color: '#e2e8f0', marginBottom: 16 }}>
+                            Nous allons vous poser <strong>10 questions</strong> pour savoir comment vous avez apprécié le jeu.
+                        </p>
+                        <p style={{ fontSize: '1rem', lineHeight: 1.6, color: '#94a3b8' }}>
+                            Pour chaque question, indiquez votre niveau d'accord en cliquant sur l'emoji correspondant.
+                        </p>
+                    </div>
+
+                    <p style={{ marginBottom: 30, color: '#e2e8f0' }}>
+                        Participant : <strong style={{ color: '#ec4899' }}>{participantId}</strong>
+                    </p>
+
+                    <button
+                        className="primary big-btn"
+                        onClick={() => setStarted(true)}
+                        style={{
+                            padding: '16px 48px',
+                            fontSize: '18px',
+                            borderRadius: '12px'
+                        }}
+                    >
+                        COMMENCER
+                    </button>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div className="container">
             <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -121,7 +187,7 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                     PRISME
                 </h2>
                 <h3 style={{ marginBottom: '30px', textAlign: 'center', color: '#94a3b8', fontSize: '1rem' }}>
-                    System Usability Scale
+                    Questionnaire d'utilisabilité
                 </h3>
 
                 {/* Progress bar */}
@@ -142,31 +208,42 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                     }} />
                 </div>
 
-                {/* Current Question */}
+                {/* Current Question - FIXED HEIGHT */}
                 <div style={{
                     background: 'rgba(255,255,255,0.05)',
                     padding: 24,
                     borderRadius: 16,
-                    marginBottom: 20
+                    marginBottom: 20,
+                    minHeight: 280,
+                    display: 'flex',
+                    flexDirection: 'column'
                 }}>
-                    <p style={{ fontSize: '1.1rem', marginBottom: 24, lineHeight: 1.6 }}>
-                        <strong>{currentQuestion + 1}.</strong> {SUS_QUESTIONS[currentQuestion]}
-                    </p>
+                    <div style={{
+                        minHeight: 80,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginBottom: 24
+                    }}>
+                        <p style={{ fontSize: '1.1rem', lineHeight: 1.6, textAlign: 'center' }}>
+                            <strong>{currentQuestion + 1}.</strong> {SUS_QUESTIONS[currentQuestion]}
+                        </p>
+                    </div>
 
                     <div style={{
                         display: 'flex',
-                        justifyContent: 'space-between',
-                        gap: 8,
-                        flexWrap: 'wrap'
+                        justifyContent: 'center',
+                        gap: 12,
+                        flexWrap: 'nowrap'
                     }}>
                         {SCALE_OPTIONS.map((option) => (
                             <button
                                 key={option.value}
                                 onClick={() => handleSelect(currentQuestion, option.value)}
                                 style={{
-                                    flex: 1,
-                                    minWidth: 60,
-                                    padding: '16px 8px',
+                                    width: 70,
+                                    height: 100,
+                                    padding: '12px 8px',
                                     borderRadius: 12,
                                     border: answers[currentQuestion] === option.value
                                         ? '2px solid #ec4899'
@@ -179,18 +256,31 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                                     display: 'flex',
                                     flexDirection: 'column',
                                     alignItems: 'center',
-                                    gap: 8
+                                    justifyContent: 'center',
+                                    gap: 8,
+                                    flexShrink: 0
                                 }}
                             >
                                 <span style={{ fontSize: 28 }}>{option.emoji}</span>
                                 <span style={{ fontSize: 18, fontWeight: 600 }}>{option.value}</span>
-                                {option.label && (
-                                    <span style={{ fontSize: 10, color: '#94a3b8', textAlign: 'center' }}>
-                                        {option.label}
-                                    </span>
-                                )}
                             </button>
                         ))}
+                    </div>
+
+                    {/* Labels under first and last */}
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        marginTop: 8,
+                        paddingLeft: 10,
+                        paddingRight: 10
+                    }}>
+                        <span style={{ fontSize: 11, color: '#94a3b8', maxWidth: 80, textAlign: 'center' }}>
+                            Pas du tout d'accord
+                        </span>
+                        <span style={{ fontSize: 11, color: '#94a3b8', maxWidth: 80, textAlign: 'center' }}>
+                            Tout à fait d'accord
+                        </span>
                     </div>
                 </div>
 
