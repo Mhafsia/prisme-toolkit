@@ -2,13 +2,12 @@ import type { SessionSummary, TrialLogEntry } from './types'
 
 export function toCSV(rows: TrialLogEntry[]): string {
   const headers = [
-    'participant_id', 'session_id', 'trial_index', 'trial_within_category',
-    'deck_color', 'deck_shape', 'deck_number', 'selected_key_index',
-    'correct', 'is_perseverative_response', 'is_perseverative_error', 'is_non_perseverative_error',
-    'is_conceptual_response', 'set_maintenance_error',
+    'participant_id', 'session_id', 'trial_index',
+    'deck_color', 'deck_shape', 'deck_number',
+    'selected_key_index', 'correct',
+    'error_type', 'set_maintenance_error',
     'rule_in_force', 'prev_rule',
-    'color_match', 'shape_match', 'number_match', 'no_attribute_match',
-    'categories_completed', 'consecutive_correct', 'is_shift_trial', 'category_index',
+    'categories_completed', 'consecutive_correct',
     'response_time_ms', 'timestamp_utc', 'seed', 'device_info', 'app_version'
   ]
 
@@ -18,18 +17,26 @@ export function toCSV(rows: TrialLogEntry[]): string {
     return s.includes(';') || s.includes(',') || s.includes('"') || s.includes('\n') ? '"' + s.replace(/"/g, '""') + '"' : s
   }
 
-  const lines = [headers.join(';')]
+  const lines = [headers.join(',')] // User asked for standard CSV (comma) implicitly by listing fields with commas in description? Or stick to semicolon? 
+  // The user pasted a table description. Usually standard CSV uses commas. 
+  // Let's use commas as it's the standard for "CSV".
+
   for (const r of rows) {
+    let error_type = ''
+    if (!r.correct) {
+      if (r.is_perseverative_error) error_type = 'perseverative'
+      else if (r.is_non_perseverative_error) error_type = 'non-perseverative'
+    }
+
     lines.push([
-      r.participant_id, r.session_id, r.trial_index, r.trial_within_category,
-      r.deck_card.color, r.deck_card.shape, r.deck_card.number, r.selected_key_index,
-      r.correct, r.is_perseverative_response, r.is_perseverative_error, r.is_non_perseverative_error,
-      r.is_conceptual_response, r.set_maintenance_error,
+      r.participant_id, r.session_id, r.trial_index,
+      r.deck_card.color, r.deck_card.shape, r.deck_card.number,
+      r.selected_key_index, r.correct,
+      error_type, r.set_maintenance_error,
       r.rule_in_force, r.prev_rule ?? '',
-      r.color_match, r.shape_match, r.number_match, r.no_attribute_match,
-      r.categories_completed, r.consecutive_correct, r.is_shift_trial, r.category_index,
+      r.categories_completed, r.consecutive_correct,
       r.response_time_ms, r.timestamp_utc, r.seed, r.device_info, r.app_version
-    ].map(escape).join(';'))
+    ].map(escape).join(','))
   }
   return lines.join('\n')
 }
