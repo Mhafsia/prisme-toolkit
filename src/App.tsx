@@ -267,7 +267,7 @@ function SettingsModal({
         <div className="modal-option">
           <label>Thème Visuel</label>
           <button className="secondary" onClick={() => setTheme(theme === 'classic' ? 'forest' : 'classic')}>
-            {theme === 'classic' ? '🌲 Forest ' : '🔷 Classic'}
+            {theme === 'classic' ? '🔷 Classique' : '🌲 Forêt'}
           </button>
         </div>
 
