@@ -43,16 +43,27 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
                     transition: 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)'
                 }}
             >
+                {/* Brain Logo */}
+                <img
+                    src="/logo.png"
+                    alt="PRISME"
+                    style={{
+                        width: 100,
+                        height: 100,
+                        marginBottom: 20,
+                        filter: 'drop-shadow(0 0 30px rgba(139, 92, 246, 0.5))',
+                        animation: 'pulse 2s ease-in-out infinite'
+                    }}
+                />
                 <h1
                     style={{
                         background: 'linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #6366f1, #8b5cf6)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
-                        fontSize: '5rem',
-                        letterSpacing: '12px',
+                        fontSize: '4rem',
+                        letterSpacing: '10px',
                         fontWeight: '900',
-                        marginBottom: '16px',
-                        textShadow: '0 0 60px rgba(236, 72, 153, 0.3)'
+                        marginBottom: '12px'
                     }}
                 >
                     PRISME
@@ -60,7 +71,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
                 <p
                     style={{
                         color: '#94a3b8',
-                        fontSize: '1.2rem',
+                        fontSize: '1.1rem',
                         fontWeight: '400',
                         letterSpacing: '4px',
                         opacity: phase === 'appear' ? 0 : 0.8,

@@ -18,14 +18,17 @@ export default function ToolSelector({ onSelectWCST, onSelectSUS, participantId,
         <div className="container">
             <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ width: 80 }}></div>
-                <span style={{
-                    background: 'linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #6366f1, #8b5cf6)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    fontSize: '1.5rem',
-                    letterSpacing: '4px',
-                    fontWeight: '800'
-                }}>PRISME</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <img src="/logo.png" alt="" style={{ width: 28, height: 28 }} />
+                    <span style={{
+                        background: 'linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #6366f1, #8b5cf6)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        fontSize: '1.5rem',
+                        letterSpacing: '4px',
+                        fontWeight: '800'
+                    }}>PRISME</span>
+                </div>
                 <button className="secondary" onClick={() => setShowSettings(true)} style={{ padding: '8px 12px', fontSize: 16 }}>
                     ⚙️
                 </button>

@@ -632,14 +632,17 @@ export default function WCSTApp({ participantId, onBack }: WCSTAppProps) {
         <button className="secondary" onClick={onBack} style={{ padding: '8px 16px' }}>
           {t.back}
         </button>
-        <span style={{
-          background: 'linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #6366f1, #8b5cf6)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          fontSize: '1.5rem',
-          letterSpacing: '3px',
-          fontWeight: '800'
-        }}>PRISME</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <img src="/logo.png" alt="" style={{ width: 26, height: 26 }} />
+          <span style={{
+            background: 'linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #6366f1, #8b5cf6)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            fontSize: '1.5rem',
+            letterSpacing: '3px',
+            fontWeight: '800'
+          }}>PRISME</span>
+        </div>
         <button className="secondary" onClick={() => setShowSettingsModal(true)} style={{ padding: '8px 12px', fontSize: 16 }}>⚙️</button>
       </header>
 
