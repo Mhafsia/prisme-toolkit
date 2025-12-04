@@ -619,8 +619,8 @@ export default function App() {
 
       {!started ? (
         <div className="intro-screen">
-          <h1 style={{ marginBottom: '10px', textAlign: 'center' }}>Wisconsin Card Sorting Test</h1>
-          <h2 style={{ marginBottom: '30px', textAlign: 'center', background: 'linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #a855f7, #ec4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontSize: '1.5rem', letterSpacing: '4px', fontWeight: '800' }}>PRISME</h2>
+          <h2 style={{ marginBottom: '10px', textAlign: 'center', background: 'linear-gradient(to right, #f97316, #ec4899, #a855f7, #3b82f6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontSize: '3rem', letterSpacing: '6px', fontWeight: '900' }}>PRISME</h2>
+          <h1 style={{ marginBottom: '40px', textAlign: 'center', fontSize: '1.5rem', color: '#94a3b8', fontWeight: '400' }}>Wisconsin Card Sorting Test</h1>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '300px', margin: '0 auto' }}>
             <div className="form-group">
               <label>ID Participant:</label>
