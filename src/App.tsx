@@ -548,9 +548,7 @@ export default function App() {
                 }}>
                   📥 Télécharger CSV
                 </button>
-                <button className="dropdown-item" onClick={() => window.location.reload()}>
-                  🔄 Nouvelle Session
-                </button>
+
               </div>
             )}
           </div>

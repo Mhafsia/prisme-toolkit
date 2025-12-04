@@ -34,7 +34,7 @@ Then open the local URL shown in the terminal (e.g., `http://192.168.1.x:5173`) 
 - In the header (gear icon), set "Max essais" to the number of trials you want for the session.
 
 ## Documentation
-- 📖 **[MECHANICS.md](./MECHANICS.md)** (English) — Detailed game mechanics, error classification, scoring, and post-processing formulas.
+- 📖 **[MECHANICS_EN.md](./MECHANICS_EN.md)** (English) — Detailed game mechanics, error classification, scoring, and post-processing formulas.
 - 📖 **[MECHANICS_FR.md](./MECHANICS_FR.md)** (Français) — Mécanique de jeu détaillée, classification des erreurs, calcul des scores et formules de post-traitement.
 
 ## Tech
