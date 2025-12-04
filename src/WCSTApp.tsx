@@ -633,7 +633,7 @@ export default function WCSTApp({ participantId, onBack }: WCSTAppProps) {
           {t.back}
         </button>
         <span style={{
-          background: 'linear-gradient(to right, #f97316, #22c55e, #3b82f6, #a855f7, #ec4899)',
+          background: 'linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #6366f1, #8b5cf6)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           fontSize: '1.5rem',
@@ -661,7 +661,7 @@ export default function WCSTApp({ participantId, onBack }: WCSTAppProps) {
 
       {!started ? (
         <div className="intro-screen">
-          <h2 style={{ marginBottom: '10px', textAlign: 'center', background: 'linear-gradient(to right, #f97316, #22c55e, #3b82f6, #a855f7, #ec4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontSize: '2.5rem', letterSpacing: '5px', fontWeight: '900' }}>PRISME</h2>
+          <h2 style={{ marginBottom: '10px', textAlign: 'center', background: 'linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #6366f1, #8b5cf6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontSize: '2.5rem', letterSpacing: '5px', fontWeight: '900' }}>PRISME</h2>
           <h1 style={{ marginBottom: '20px', textAlign: 'center', fontSize: '1.3rem', color: '#94a3b8', fontWeight: '400' }}>{t.wcstSubtitle}</h1>
           <p style={{ textAlign: 'center', marginBottom: '30px', color: '#e2e8f0' }}>{t.participant}: <strong>{participantId}</strong></p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '300px', margin: '0 auto' }}>

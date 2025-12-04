@@ -151,7 +151,7 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                         {t.back}
                     </button>
                     <span style={{
-                        background: 'linear-gradient(to right, #f97316, #22c55e, #3b82f6, #a855f7, #ec4899)',
+                        background: 'linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #6366f1, #8b5cf6)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
                         fontSize: '1.5rem',
@@ -182,7 +182,7 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                         {t.back}
                     </button>
                     <span style={{
-                        background: 'linear-gradient(to right, #f97316, #22c55e, #3b82f6, #a855f7, #ec4899)',
+                        background: 'linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #6366f1, #8b5cf6)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
                         fontSize: '1.5rem',
@@ -200,7 +200,7 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                     <div style={{ textAlign: 'center', maxWidth: 500 }}>
                         <h2 style={{
                             marginBottom: '10px',
-                            background: 'linear-gradient(to right, #f97316, #22c55e, #3b82f6, #a855f7, #ec4899)',
+                            background: 'linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #6366f1, #8b5cf6)',
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
                             fontSize: '2.5rem',
@@ -257,7 +257,7 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                         {t.back}
                     </button>
                     <span style={{
-                        background: 'linear-gradient(to right, #f97316, #22c55e, #3b82f6, #a855f7, #ec4899)',
+                        background: 'linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #6366f1, #8b5cf6)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
                         fontSize: '1.5rem',
@@ -276,7 +276,7 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                         <h2 style={{
                             marginBottom: '20px',
                             textAlign: 'center',
-                            background: 'linear-gradient(to right, #f97316, #22c55e, #3b82f6, #a855f7, #ec4899)',
+                            background: 'linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #6366f1, #8b5cf6)',
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
                             fontSize: '1.8rem',
@@ -380,7 +380,7 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                     <h2 style={{
                         marginBottom: '10px',
                         textAlign: 'center',
-                        background: 'linear-gradient(to right, #f97316, #22c55e, #3b82f6, #a855f7, #ec4899)',
+                        background: 'linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #6366f1, #8b5cf6)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
                         fontSize: '1.8rem',
