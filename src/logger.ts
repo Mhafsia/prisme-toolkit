@@ -135,7 +135,7 @@ export function downloadCSV(filename: string, csv: string) {
 // 14 columns: card_id, correct_target, perseveration_target, trial_in_sequence, task_name, shape_label, symbol_count, color_label, reaction_time_ms, status, clicked_card, is_error, is_perseveration_error, is_non_perseveration_error
 import { COLORS, SHAPES, NUMBERS } from './engine/wcst'
 
-export function toPsyToolkitCSV(rows: TrialLogEntry[]): string {
+export function toCSV_WCST(rows: TrialLogEntry[]): string {
   const headers = [
     'card_id', 'correct_target', 'perseveration_target', 'trial_in_sequence',
     'task_name', 'shape_label', 'symbol_count', 'color_label',

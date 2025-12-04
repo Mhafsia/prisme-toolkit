@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import type { CardSpec, Rule, SessionSummary, TrialLogEntry } from './types'
 import { KEY_CARDS, initWCST, getDeckCard, evaluateSelection } from './engine/wcst'
-import { computeSummary, downloadCSV, toCSV, toPsyToolkitCSV } from './logger'
+import { computeSummary, downloadCSV, toCSV } from './logger'
 import './styles.css'
 
 type Theme = 'forest' | 'classic'
@@ -224,10 +224,10 @@ function Summary({ logs, onExport, onPreview }: { logs: TrialLogEntry[], onExpor
     <div>
       <div style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
         <button className="primary" onClick={() => {
-          downloadCSV(`wcst_psytoolkit_${Date.now()}.csv`, toPsyToolkitCSV(logs))
+          downloadCSV(`prisme-wcst-${Date.now()}.csv`, toCSV(logs))
           onExport?.()
         }}>Télécharger CSV</button>
-        <button className="secondary" onClick={onPreview}>
+        <button className="secondary" onClick={onPreview}>toCSV
           Voir Résultats
         </button>
       </div>
@@ -542,7 +542,7 @@ export default function App() {
                   📊 Résultats
                 </button>
                 <button className="dropdown-item" onClick={() => {
-                  downloadCSV(`wcst_psytoolkit_${Date.now()}.csv`, toPsyToolkitCSV(logs))
+                  downloadCSV(`prisme-wcst-${Date.now()}.csv`, toCSV(logs))
                   setHasExported(true)
                   setShowMenu(false)
                 }}>
