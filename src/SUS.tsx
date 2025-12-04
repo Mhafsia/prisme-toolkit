@@ -169,36 +169,36 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
 
     // Language toggle button
     const LanguageToggle = () => (
-        <div style={{ display: 'flex', gap: 8 }}>
+        <div style={{ display: 'flex', gap: 4 }}>
             <button
                 onClick={() => setLang('fr')}
                 style={{
-                    padding: '6px 12px',
+                    padding: '6px 14px',
                     borderRadius: 6,
                     border: lang === 'fr' ? '2px solid #ec4899' : '1px solid rgba(255,255,255,0.2)',
                     background: lang === 'fr' ? 'rgba(236, 72, 153, 0.2)' : 'transparent',
                     cursor: 'pointer',
                     fontSize: 14,
-                    fontWeight: lang === 'fr' ? 600 : 400,
-                    color: '#e2e8f0'
+                    fontWeight: lang === 'fr' ? 700 : 400,
+                    color: lang === 'fr' ? '#ec4899' : '#94a3b8'
                 }}
             >
-                🇫🇷 FR
+                FR
             </button>
             <button
                 onClick={() => setLang('en')}
                 style={{
-                    padding: '6px 12px',
+                    padding: '6px 14px',
                     borderRadius: 6,
                     border: lang === 'en' ? '2px solid #ec4899' : '1px solid rgba(255,255,255,0.2)',
                     background: lang === 'en' ? 'rgba(236, 72, 153, 0.2)' : 'transparent',
                     cursor: 'pointer',
                     fontSize: 14,
-                    fontWeight: lang === 'en' ? 600 : 400,
-                    color: '#e2e8f0'
+                    fontWeight: lang === 'en' ? 700 : 400,
+                    color: lang === 'en' ? '#ec4899' : '#94a3b8'
                 }}
             >
-                🇬🇧 EN
+                EN
             </button>
         </div>
     )
