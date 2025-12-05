@@ -627,20 +627,30 @@ export default function WCSTApp({ participantId, onBack }: WCSTAppProps) {
     )
   }
 
+  const handleBack = () => {
+    if (started && !finished) {
+      if (window.confirm(t.warningBack)) {
+        onBack()
+      }
+    } else {
+      onBack()
+    }
+  }
+
   return (
     <div className="container">
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <button className="secondary" onClick={onBack} style={{ padding: '8px 16px' }}>
+        <button className="secondary" onClick={handleBack} style={{ padding: '8px 16px' }}>
           {t.back}
         </button>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <img src={logoImg} alt="" style={{ width: 26, height: 26 }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <img src={logoImg} alt="" style={{ width: 28, height: 28 }} />
           <span style={{
             background: 'linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #6366f1, #8b5cf6)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             fontSize: '1.5rem',
-            letterSpacing: '3px',
+            letterSpacing: '4px',
             fontWeight: '800'
           }}>PRISME</span>
         </div>

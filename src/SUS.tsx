@@ -151,14 +151,14 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                     <button className="secondary" onClick={onBack} style={{ padding: '8px 16px' }}>
                         {t.back}
                     </button>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                        <img src={logoImg} alt="" style={{ width: 26, height: 26 }} />
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                        <img src={logoImg} alt="" style={{ width: 28, height: 28 }} />
                         <span style={{
                             background: 'linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #6366f1, #8b5cf6)',
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
                             fontSize: '1.5rem',
-                            letterSpacing: '3px',
+                            letterSpacing: '4px',
                             fontWeight: '800'
                         }}>PRISME</span>
                     </div>
@@ -387,22 +387,23 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                     {/* Question Box */}
                     <div style={fixedContainerStyle}>
                         <div style={{
-                            minHeight: 60,
+                            minHeight: 40,
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center'
                         }}>
                             <p style={{
                                 fontSize: '1rem',
-                                lineHeight: 1.5,
+                                lineHeight: 1.4,
                                 textAlign: 'center',
-                                maxWidth: 480
+                                maxWidth: 480,
+                                margin: 0
                             }}>
                                 <strong>{currentQuestion + 1}.</strong> {questions[currentQuestion]}
                             </p>
                         </div>
 
-                        <div style={{ marginTop: 8 }}>
+                        <div style={{ marginTop: 4 }}>
                             {/* Emoji buttons */}
                             <div style={{
                                 display: 'flex',
