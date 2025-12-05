@@ -205,17 +205,6 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
 
                 <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <div style={{ textAlign: 'center', maxWidth: 500 }}>
-                        <h2 style={{
-                            marginBottom: '10px',
-                            background: 'linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #6366f1, #8b5cf6)',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                            fontSize: '2.5rem',
-                            letterSpacing: '4px',
-                            fontWeight: '900'
-                        }}>
-                            PRISME
-                        </h2>
                         <h3 style={{ marginBottom: '24px', color: '#94a3b8', fontSize: '1.1rem' }}>
                             {t.usability}
                         </h3>
@@ -283,19 +272,6 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
 
                 <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <div style={{ width: '100%', maxWidth: 600 }}>
-                        <h2 style={{
-                            marginBottom: '20px',
-                            textAlign: 'center',
-                            background: 'linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #6366f1, #8b5cf6)',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                            fontSize: '1.8rem',
-                            letterSpacing: '4px',
-                            fontWeight: '900'
-                        }}>
-                            PRISME
-                        </h2>
-
                         <div style={fixedContainerStyle}>
                             <div style={{
                                 minHeight: 60,
@@ -390,19 +366,6 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
 
             <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div style={{ width: '100%', maxWidth: 600 }}>
-                    <h2 style={{
-                        marginBottom: '10px',
-                        textAlign: 'center',
-                        background: 'linear-gradient(to right, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #6366f1, #8b5cf6)',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
-                        fontSize: '1.8rem',
-                        letterSpacing: '4px',
-                        fontWeight: '900'
-                    }}>
-                        PRISME
-                    </h2>
-
                     {/* Progress bar */}
                     <div style={{
                         width: '100%',
