@@ -45,7 +45,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
             >
                 {/* Brain Logo */}
                 <img
-                    src="/logo.png"
+                    src="/PRISME-Logo.png"
                     alt="PRISME"
                     style={{
                         width: 100,
