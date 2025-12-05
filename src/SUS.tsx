@@ -124,7 +124,8 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
         const url = URL.createObjectURL(blob)
         const a = document.createElement('a')
         a.href = url
-        a.download = `prisme-fsus-${Date.now()}.csv`
+        const dateStr = new Date().toISOString().split('T')[0].replace(/-/g, '')
+        a.download = `SUS_${participantId}_${dateStr}.csv`
         a.click()
         URL.revokeObjectURL(url)
     }
@@ -132,11 +133,11 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
     // Fixed container style
     const fixedContainerStyle: React.CSSProperties = {
         background: 'rgba(255,255,255,0.05)',
-        padding: 24,
+        padding: 16,
         borderRadius: 16,
         width: '100%',
         maxWidth: 550,
-        minHeight: 280,
+        minHeight: 200,
         margin: '0 auto',
         display: 'flex',
         flexDirection: 'column',
@@ -403,7 +404,7 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                             </p>
                         </div>
 
-                        <div style={{ marginTop: 4 }}>
+                        <div style={{ marginTop: 0 }}>
                             {/* Emoji buttons */}
                             <div style={{
                                 display: 'flex',

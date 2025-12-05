@@ -360,6 +360,12 @@ function StatsModal({ logs, onClose }: { logs: TrialLogEntry[]; onClose: () => v
           <div className="stat-row"><strong>Mean RT (error):</strong> {Math.round(summary.mean_rt_error)} ms</div>
         </div>
         <div className="actions" style={{ marginTop: 16 }}>
+          <button className="secondary" onClick={() => {
+            const csv = toCSV(logs)
+            const dateStr = new Date().toISOString().split('T')[0].replace(/-/g, '')
+            const participantId = logs[0]?.participant_id || 'unknown'
+            downloadCSV(`WCST_${participantId}_${dateStr}.csv`, csv)
+          }}>Télécharger CSV</button>
           <button className="primary" onClick={onClose}>Fermer</button>
         </div>
       </div>
