@@ -69,8 +69,8 @@ export const T = {
         enterParticipant: '⚠️ Veuillez entrer un ID participant pour continuer',
         wcstTitle: 'WCST',
         wcstDesc: 'Wisconsin Card Sorting Test',
-        susTitle: 'SUS',
-        susDesc: 'Questionnaire d\'utilisabilité',
+        susTitle: "Questionnaire d'utilisabilité",
+        susDesc: "Questionnaire d'utilisabilité",
 
         // SUS
         usability: "Questionnaire d'utilisabilité",
@@ -139,7 +139,7 @@ export const T = {
         enterParticipant: '⚠️ Please enter a participant ID to continue',
         wcstTitle: 'WCST',
         wcstDesc: 'Wisconsin Card Sorting Test',
-        susTitle: 'SUS',
+        susTitle: 'Usability Questionnaire',
         susDesc: 'Usability Questionnaire',
 
         // SUS
