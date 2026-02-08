@@ -5,28 +5,28 @@ import './styles.css'
 
 const FSUS_QUESTIONS = {
     fr: [
-        "Je voudrais utiliser ce système fréquemment",
-        "Ce système est inutilement complexe",
-        "Ce système est facile à utiliser",
-        "J'aurais besoin du soutien d'un technicien pour être capable d'utiliser ce système",
-        "Les différentes fonctionnalités de ce système sont bien intégrées",
-        "Il y a trop d'incohérences dans ce système",
-        "La plupart des gens apprendront à utiliser ce système très rapidement",
-        "Ce système est très lourd à utiliser",
-        "Je me suis senti·e très en confiance en utilisant ce système",
-        "J'ai eu besoin d'apprendre beaucoup de choses avant de pouvoir utiliser ce système"
+        "Je voudrais utiliser Pop'Balloons fréquemment",
+        "Pop'Balloons est inutilement complexe",
+        "Pop'Balloons est facile à utiliser",
+        "J'aurais besoin du soutien d'un technicien pour être capable d'utiliser Pop'Balloons",
+        "Les différentes fonctionnalités de Pop'Balloons sont bien intégrées",
+        "Il y a trop d'incohérences dans Pop'Balloons",
+        "La plupart des gens apprendront à utiliser Pop'Balloons très rapidement",
+        "Pop'Balloons est très lourd à utiliser",
+        "Je me suis senti·e très en confiance en utilisant Pop'Balloons",
+        "J'ai eu besoin d'apprendre beaucoup de choses avant de pouvoir utiliser Pop'Balloons"
     ],
     en: [
-        "I would like to use this system frequently",
-        "This system is unnecessarily complex",
-        "This system is easy to use",
-        "I would need the support of a technical person to be able to use this system",
-        "The various functions in this system are well integrated",
-        "There is too much inconsistency in this system",
-        "Most people would learn to use this system very quickly",
-        "This system is very cumbersome to use",
-        "I felt very confident using this system",
-        "I needed to learn a lot of things before I could get going with this system"
+        "I would like to use Pop'Balloons frequently",
+        "Pop'Balloons is unnecessarily complex",
+        "Pop'Balloons is easy to use",
+        "I would need the support of a technical person to be able to use Pop'Balloons",
+        "The various functions in Pop'Balloons are well integrated",
+        "There is too much inconsistency in Pop'Balloons",
+        "Most people would learn to use Pop'Balloons very quickly",
+        "Pop'Balloons is very cumbersome to use",
+        "I felt very confident using Pop'Balloons",
+        "I needed to learn a lot of things before I could get going with Pop'Balloons"
     ]
 }
 
