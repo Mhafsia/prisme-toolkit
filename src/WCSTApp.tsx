@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import type { CardSpec, Rule, SessionSummary, TrialLogEntry } from './types'
 import { KEY_CARDS, initWCST, getDeckCard, evaluateSelection } from './engine/wcst'
-import { computeSummary, downloadCSV, toCSV } from './logger'
+import { computeSummary, downloadCSV, toCSV, downloadJSON } from './logger'
 import { useSettings, T } from './Settings'
 import logoImg from './assets/PRISME-Logo.png'
 import './styles.css'
@@ -221,15 +221,25 @@ function Card({
   )
 }
 
-function Summary({ logs, onExport, onPreview }: { logs: TrialLogEntry[], onExport?: () => void, onPreview?: () => void }) {
+function Summary({ logs, participantId, onExport, onPreview }: { logs: TrialLogEntry[], participantId: string, onExport?: () => void, onPreview?: () => void }) {
+  const summary = useMemo(() => computeSummary(logs), [logs])
+  const downloadResultsJSON = () => {
+    const data = {
+      participant_id: participantId,
+      timestamp_utc: new Date().toISOString(),
+      summary,
+      trials: logs
+    }
+    const dateStr = new Date().toISOString().split('T')[0].replace(/-/g, '')
+    downloadJSON(`WCST_${participantId}_${dateStr}.json`, data)
+    onExport?.()
+  }
+
   return (
     <div>
       <div style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
-        <button className="primary" onClick={() => {
-          downloadCSV(`prisme-wcst-${Date.now()}.csv`, toCSV(logs))
-          onExport?.()
-        }}>Télécharger CSV</button>
-        <button className="secondary" onClick={onPreview}>toCSV
+        <button className="primary" onClick={downloadResultsJSON}>📥 Télécharger JSON</button>
+        <button className="secondary" onClick={onPreview}>
           Voir Résultats
         </button>
       </div>
@@ -361,11 +371,15 @@ function StatsModal({ logs, onClose }: { logs: TrialLogEntry[]; onClose: () => v
         </div>
         <div className="actions" style={{ marginTop: 16 }}>
           <button className="secondary" onClick={() => {
-            const csv = toCSV(logs)
+            const data = {
+              participant_id: logs[0]?.participant_id || 'unknown',
+              timestamp_utc: new Date().toISOString(),
+              summary,
+              trials: logs
+            }
             const dateStr = new Date().toISOString().split('T')[0].replace(/-/g, '')
-            const participantId = logs[0]?.participant_id || 'unknown'
-            downloadCSV(`WCST_${participantId}_${dateStr}.csv`, csv)
-          }}>Télécharger CSV</button>
+            downloadJSON(`WCST_${data.participant_id}_${dateStr}.json`, data)
+          }}>📥 Télécharger JSON</button>
           <button className="primary" onClick={onClose}>Fermer</button>
         </div>
       </div>
@@ -595,11 +609,18 @@ export default function WCSTApp({ participantId, onBack }: WCSTAppProps) {
                   📊 Résultats
                 </button>
                 <button className="dropdown-item" onClick={() => {
-                  downloadCSV(`prisme-wcst-${Date.now()}.csv`, toCSV(logs))
+                  const data = {
+                    participant_id: participantId,
+                    timestamp_utc: new Date().toISOString(),
+                    summary: computeSummary(logs),
+                    trials: logs
+                  }
+                  const dateStr = new Date().toISOString().split('T')[0].replace(/-/g, '')
+                  downloadJSON(`WCST_${participantId}_${dateStr}.json`, data)
                   setHasExported(true)
                   setShowMenu(false)
                 }}>
-                  📥 Télécharger CSV
+                  📥 Télécharger JSON
                 </button>
 
               </div>

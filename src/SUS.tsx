@@ -100,32 +100,28 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
         }
     }
 
-    const downloadCSV = () => {
-        const headers = [
-            'participant_id',
-            'timestamp_utc',
-            'language',
-            ...questions.map((_, i) => `q${i + 1}`),
-            'nps_score',
-            'sus_score'
-        ]
+    const downloadJSON = () => {
+        const data = {
+            participant_id: participantId || 'anon',
+            timestamp_utc: new Date().toISOString(),
+            language: settings.language,
+            questions: FSUS_QUESTIONS[settings.language],
+            answers: answers.map((a, i) => ({
+                question_index: i + 1,
+                question_text: FSUS_QUESTIONS[settings.language][i],
+                score: a
+            })),
+            nps_score: npsAnswer,
+            sus_score: susScore !== null ? Number(susScore.toFixed(1)) : null
+        }
 
-        const row = [
-            participantId || 'anon',
-            new Date().toISOString(),
-            settings.language,
-            ...answers,
-            npsAnswer,
-            susScore?.toFixed(1)
-        ]
-
-        const csv = '\uFEFF' + headers.join(';') + '\n' + row.join(';')
-        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+        const json = JSON.stringify(data, null, 2)
+        const blob = new Blob([json], { type: 'application/json' })
         const url = URL.createObjectURL(blob)
         const a = document.createElement('a')
         a.href = url
         const dateStr = new Date().toISOString().split('T')[0].replace(/-/g, '')
-        a.download = `SUS_${participantId}_${dateStr}.csv`
+        a.download = `SUS_${participantId}_${dateStr}.json`
         a.click()
         URL.revokeObjectURL(url)
     }
@@ -163,8 +159,8 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
                             fontWeight: '800'
                         }}>PRISME</span>
                     </div>
-                    <button className="primary" onClick={downloadCSV} style={{ padding: '8px 12px', fontSize: 14 }}>
-                        {t.downloadCSV}
+                    <button className="primary" onClick={downloadJSON} style={{ padding: '8px 12px', fontSize: 14 }}>
+                        {t.downloadCSV.replace('CSV', 'JSON')}
                     </button>
                 </header>
 
