@@ -79,7 +79,7 @@ export const T = {
         intro3: 'pour savoir comment vous avez apprécié le jeu.',
         intro4: "Pour chaque question, indiquez votre niveau d'accord.",
         question: 'Question',
-        recommend: 'Recommanderiez-vous ce système à d\'autres personnes ?',
+        recommend: "Recommanderiez-vous Pop'Balloons à d'autres personnes ?",
         notAtAll: 'Certainement pas',
         absolutely: 'Absolument',
         disagree: "Pas du tout d'accord",
@@ -110,7 +110,7 @@ export const T = {
         tutorialShape: 'la forme',
         tutorialNumber: 'le nombre d\'objets sur la carte',
         tutorialImportant: 'Important :',
-        tutorialRules: 'Il n\'y a pas d\'explication au début. Tu dois simplement essayer, et le système te dira si ta réponse est correcte ou incorrecte.',
+        tutorialRules: "Il n'y a pas d'explication au début. Tu dois simplement essayer, et Pop'Balloons te dira si ta réponse est correcte ou incorrecte.",
         tutorialChange: 'La règle peut changer sans prévenir, alors continue d\'observer les indices pour t\'adapter.',
         tutorialReady: 'Prends ton temps, mais garde un bon rythme. Si tu es prêt·e, appuie pour commencer.'
     },
@@ -149,7 +149,7 @@ export const T = {
         intro3: 'to find out how you enjoyed the game.',
         intro4: 'For each question, indicate your level of agreement.',
         question: 'Question',
-        recommend: 'Would you recommend this system to other people?',
+        recommend: "Would you recommend Pop'Balloons to other people?",
         notAtAll: 'Definitely not',
         absolutely: 'Absolutely',
         disagree: 'Strongly disagree',
@@ -180,7 +180,7 @@ export const T = {
         tutorialShape: 'shape',
         tutorialNumber: 'number of items',
         tutorialImportant: 'Important:',
-        tutorialRules: 'No instructions are given at first. Try your best, and the system will tell you if your choice is correct or incorrect.',
+        tutorialRules: "No instructions are given at first. Try your best, and Pop'Balloons will tell you if your choice is correct or incorrect.",
         tutorialChange: 'The sorting rule may change without warning, so keep paying attention and adjust as needed.',
         tutorialReady: 'Take your time but keep a steady pace. When you\'re ready, tap to begin.'
     }
