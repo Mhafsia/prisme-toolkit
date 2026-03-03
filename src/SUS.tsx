@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react'
 import { useSettings, SettingsModal, T } from './Settings'
+import { pushTestResult } from './supabasePush'
 import logoImg from './assets/PRISME-Logo.png'
 import './styles.css'
 
@@ -97,6 +98,29 @@ export default function SUS({ onComplete, onBack, participantId }: SUSProps) {
         if (isComplete && susScore !== null && npsAnswer !== null) {
             setIsFinished(true)
             onComplete(susScore, answers as number[], npsAnswer)
+
+            // Auto-push to Supabase (fire-and-forget)
+            const payload = {
+                participant_id: participantId || 'anon',
+                timestamp_utc: new Date().toISOString(),
+                language: settings.language,
+                questions: FSUS_QUESTIONS[settings.language],
+                answers: answers.map((a, i) => ({
+                    question_index: i + 1,
+                    question_text: FSUS_QUESTIONS[settings.language][i],
+                    score: a
+                })),
+                nps_score: npsAnswer,
+                sus_score: Number(susScore.toFixed(1))
+            }
+            pushTestResult({
+                participant_id: participantId || 'anon',
+                test_type: 'SUS',
+                completed_at: new Date().toISOString(),
+                payload: payload as Record<string, unknown>,
+            }).then(r => {
+                if (!r.success) console.warn('[SUS] Supabase push failed:', r.error)
+            })
         }
     }
 

@@ -4,9 +4,10 @@ import SplashScreen from './SplashScreen'
 import ToolSelector from './ToolSelector'
 import WCSTApp from './WCSTApp'
 import SUS from './SUS'
+import SessionsViewer from './SessionsViewer'
 import './styles.css'
 
-type ActiveTool = 'selector' | 'wcst' | 'sus'
+type ActiveTool = 'selector' | 'wcst' | 'sus' | 'sessions'
 
 function AppContent() {
     const [showSplash, setShowSplash] = useState(true)
@@ -23,6 +24,10 @@ function AppContent() {
 
     if (activeTool === 'wcst') {
         return <WCSTApp participantId={participantId} onBack={handleBack} />
+    }
+
+    if (activeTool === 'sessions') {
+        return <SessionsViewer isFr onBack={handleBack} />
     }
 
     if (activeTool === 'sus') {
@@ -43,6 +48,7 @@ function AppContent() {
             setParticipantId={setParticipantId}
             onSelectWCST={() => setActiveTool('wcst')}
             onSelectSUS={() => setActiveTool('sus')}
+            onSelectSessions={() => setActiveTool('sessions')}
         />
     )
 }

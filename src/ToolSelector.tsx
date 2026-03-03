@@ -6,11 +6,12 @@ import './styles.css'
 interface ToolSelectorProps {
     onSelectWCST: () => void
     onSelectSUS: () => void
+    onSelectSessions: () => void
     participantId: string
     setParticipantId: (id: string) => void
 }
 
-export default function ToolSelector({ onSelectWCST, onSelectSUS, participantId, setParticipantId }: ToolSelectorProps) {
+export default function ToolSelector({ onSelectWCST, onSelectSUS, onSelectSessions, participantId, setParticipantId }: ToolSelectorProps) {
     const { settings } = useSettings()
     const [showSettings, setShowSettings] = useState(false)
     const t = T[settings.language]
@@ -129,6 +130,36 @@ export default function ToolSelector({ onSelectWCST, onSelectSUS, participantId,
                             <h3 style={{ marginBottom: 6, color: '#e2e8f0', fontSize: '1.2rem' }}>{t.susTitle}</h3>
                             <p style={{ color: '#94a3b8', fontSize: '0.85rem', lineHeight: 1.4 }}>
                                 {t.susDesc}
+                            </p>
+                        </button>
+
+                        {/* Sessions PRISME Card */}
+                        <button
+                            onClick={onSelectSessions}
+                            style={{
+                                background: 'rgba(255,255,255,0.05)',
+                                backdropFilter: 'blur(12px)',
+                                border: '1px solid rgba(255,255,255,0.1)',
+                                borderRadius: 16,
+                                padding: 24,
+                                cursor: 'pointer',
+                                transition: 'all 0.3s',
+                            }}
+                            onMouseEnter={e => {
+                                e.currentTarget.style.transform = 'translateY(-4px)'
+                                e.currentTarget.style.background = 'rgba(255,255,255,0.1)'
+                                e.currentTarget.style.borderColor = '#4DEB91'
+                            }}
+                            onMouseLeave={e => {
+                                e.currentTarget.style.transform = 'translateY(0)'
+                                e.currentTarget.style.background = 'rgba(255,255,255,0.05)'
+                                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'
+                            }}
+                        >
+                            <div style={{ fontSize: 40, marginBottom: 12 }}>📥</div>
+                            <h3 style={{ marginBottom: 6, color: '#e2e8f0', fontSize: '1.2rem' }}>Sessions PRISME</h3>
+                            <p style={{ color: '#94a3b8', fontSize: '0.85rem', lineHeight: 1.4 }}>
+                                Consulter les séances cliniques reçues
                             </p>
                         </button>
                     </div>

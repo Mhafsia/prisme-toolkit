@@ -3,6 +3,7 @@ import type { CardSpec, Rule, SessionSummary, TrialLogEntry } from './types'
 import { KEY_CARDS, initWCST, getDeckCard, evaluateSelection } from './engine/wcst'
 import { computeSummary, downloadCSV, toCSV, downloadJSON } from './logger'
 import { useSettings, T } from './Settings'
+import { pushTestResult } from './supabasePush'
 import logoImg from './assets/PRISME-Logo.png'
 import './styles.css'
 
@@ -619,6 +620,15 @@ export default function WCSTApp({ participantId, onBack }: WCSTAppProps) {
                   downloadJSON(`WCST_${participantId}_${dateStr}.json`, data)
                   setHasExported(true)
                   setShowMenu(false)
+                  // Auto-push to Supabase
+                  pushTestResult({
+                    participant_id: participantId,
+                    test_type: 'WCST',
+                    completed_at: new Date().toISOString(),
+                    payload: data as Record<string, unknown>,
+                  }).then(r => {
+                    if (!r.success) console.warn('[WCST] Supabase push failed:', r.error)
+                  })
                 }}>
                   📥 Télécharger JSON
                 </button>
